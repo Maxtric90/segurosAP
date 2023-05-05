@@ -7,10 +7,10 @@
 
 <div class="p-2 mb-3">
     <h3>Dar de alta cliente</h3>
-    <form>
-        <label>Razón Social<input type="text" id="Name" name="Name" /></label><br>
-        <label>CUIT<input type="text" id="CUIT" name="CUIT" /></label><br>
-        <input type="submit" value="Dar de alta" class="btn btn-primary">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Dar de alta">
     </form>
 </div>
 

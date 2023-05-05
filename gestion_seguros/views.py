@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from .forms import AltaClienteForm
 
 # Create your views here.
 def index(request):
@@ -16,9 +17,15 @@ def gestion_clientes(request):
          'polizas_activas': 0}
     ]
 
-    context={
-        'clientes': clientes
-    }
+    if request.method == "POST":
+        alta_cliente_form = AltaClienteForm(request.POST)
+        if alta_cliente_form.is_valid():
+            print(alta_cliente_form.cleaned_data['razonSocial'])
+            return redirect("index")
+    else:
+        alta_cliente_form = AltaClienteForm()
+    context = {'clientes': clientes, 'form': alta_cliente_form}
+    print(request.POST)
     return render(request, 'gestion_seguros/gestion_clientes.html', context)
 
 def gestion_polizas(request):
