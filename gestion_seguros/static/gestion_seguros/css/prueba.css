@@ -1,0 +1,9 @@
+body {
+    background-color: aquamarine;
+}
+
+
+li.nav-item :hover{
+    background-color: rgb(229, 241, 237);
+    color: rgb(18, 20, 22);
+}
