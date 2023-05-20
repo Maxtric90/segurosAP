@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages
 from .forms import AltaClienteForm
 from .models import Cliente
 
@@ -12,14 +13,16 @@ def gestion_clientes(request):
     clientes=Cliente.objects.all()
 
     if request.method == "POST":
-        alta_cliente_form = AltaClienteForm(request.POST)
-        if alta_cliente_form.is_valid():
-            print(alta_cliente_form.cleaned_data['razonSocial'])
-            return redirect("index")
+        form = AltaClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'Cliente dado de alta')
+            return redirect("gestion_clientes")
+        else:
+            pass
     else:
-        alta_cliente_form = AltaClienteForm()
-    context = {'clientes': clientes, 'form': alta_cliente_form}
-    print(request.POST)
+        form = AltaClienteForm()
+    context = {'clientes': clientes, 'form': form}
     return render(request, 'gestion_seguros/gestion_clientes.html', context)
 
 def gestion_polizas(request):

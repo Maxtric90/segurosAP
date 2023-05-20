@@ -20,7 +20,7 @@ class Cliente(models.Model):
     domicilio_ciudad= models.CharField(max_length=128, verbose_name="Ciudad")
     domicilio_calle= models.CharField(max_length=128, verbose_name="Calle")
     domicilio_numero= models.IntegerField(verbose_name="Número")
-    domicilio_calle= models.CharField(max_length=128, verbose_name="Depto", null=True)
+    domicilio_depto= models.CharField(max_length=128, verbose_name="Depto", null=True, blank=True)
     telefono = models.CharField(max_length=12, verbose_name="Teléfono", null=True)
     tipo_persona = models.CharField(max_length=16, choices=TIPO_PERSONA_CHOICES, verbose_name="Tipo de persona")
 
