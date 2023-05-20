@@ -13,7 +13,7 @@ TIPO_PERSONA_CHOICES = [
 
 # Create your models here.
 class Cliente(models.Model):
-    nombre = models.CharField(max_length=64, verbose_name="Nombre completo o Razón Social")
+    nombre = models.CharField(max_length=64, verbose_name="Nombre o Razón Social")
     documento = models.CharField(max_length=16, verbose_name="CUIT/CUIL")
     email = models.EmailField(verbose_name="Email")
     domicilio_provincia = models.CharField(max_length=32, choices=PROVINCIA_CHOICES, verbose_name="Provincia")

@@ -6,12 +6,16 @@
 <h1>Gestión de clientes</h1>
 
 <div class="p-2 mb-3">
-    <h3>Dar de alta cliente</h3>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Dar de alta">
-    </form>
+    <section class="form-container secondary-bg">
+        <h3>Dar de alta cliente</h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="Dar de alta" class="btn btn-primary">
+        </form>
+    </section>
 </div>
 
 <div class="p-2">
