@@ -44,3 +44,9 @@ def gestion_polizas(request):
 def gestion_asegurados(request):
     context={}
     return render(request, 'gestion_seguros/gestion_asegurados.html', context)
+
+def cartera_cliente(request, cliente_id):
+    cliente=Cliente.objects.filter(id = cliente_id)[0]   #Entender si es la mejor manera indexar con 0
+    polizas=Poliza.objects.filter(cliente_id = cliente_id)
+    context = {'cliente': cliente, 'polizas': polizas}
+    return render(request, 'gestion_seguros/cartera_cliente.html', context)
