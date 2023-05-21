@@ -8,4 +8,5 @@ urlpatterns = [
     path('gestion_asegurados/', views.gestion_asegurados, name='gestion_asegurados'),
     path('cartera_cliente/<int:cliente_id>', views.cartera_cliente, name='cartera_cliente'),
     path('detalle_cliente/<int:cliente_id>', views.detalle_cliente, name='detalle_cliente'),
+    path('detalle_poliza/<int:poliza_id>', views.detalle_poliza, name='detalle_poliza'),
 ]

@@ -48,3 +48,27 @@ class AltaPolizaForm(forms.ModelForm):
             raise ValidationError("La fecha de fin no puede ser anterior a la fecha de inicio")
         
         return self.cleaned_data
+    
+class ModificarPolizaForm(forms.ModelForm):
+    class Meta:
+        model = Poliza
+        fields = "__all__"
+        widgets = {
+            "fecha_inicio": forms.DateInput(
+                attrs={'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)'}
+            ),
+            "fecha_fin": forms.DateInput(
+                attrs={'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)'}
+            ),
+            "fecha_limite_carga": forms.DateInput(
+                attrs={'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)'}
+            )
+        }
+
+    def clean(self):
+        fecha_inicio = self.cleaned_data["fecha_inicio"]
+        fecha_fin = self.cleaned_data["fecha_fin"]
+        if fecha_inicio > fecha_fin:
+            raise ValidationError("La fecha de fin no puede ser anterior a la fecha de inicio")
+        
+        return self.cleaned_data

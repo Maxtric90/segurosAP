@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.forms.models import model_to_dict
-from .forms import AltaClienteForm, AltaPolizaForm, ModificarClienteForm
+from .forms import AltaClienteForm, AltaPolizaForm, ModificarClienteForm, ModificarPolizaForm
 from .models import Cliente, Poliza
 
 
@@ -77,3 +77,26 @@ def detalle_cliente(request, cliente_id):
         form = ModificarClienteForm(initial = model_to_dict(cliente))
     context = {'cliente': cliente, 'form': form}
     return render(request, 'gestion_seguros/detalle_cliente.html', context)
+
+def detalle_poliza(request, poliza_id):
+    poliza=Poliza.objects.get(id = poliza_id) 
+    if request.method == "POST":
+        form = ModificarPolizaForm(request.POST)
+        if form.is_valid():
+            Poliza.objects.filter(id = poliza_id).update(
+                cliente=form.cleaned_data["cliente"],
+                numero=form.cleaned_data["numero"],
+                tomador=form.cleaned_data["tomador"],
+                limite_asegurados= form.cleaned_data["limite_asegurados"],
+                fecha_inicio= form.cleaned_data["fecha_inicio"],
+                fecha_fin= form.cleaned_data["fecha_fin"],
+                fecha_limite_carga= form.cleaned_data["fecha_limite_carga"],
+                condiciones= form.cleaned_data["condiciones"],
+            )
+            messages.add_message(request, messages.SUCCESS, 'Póliza modificado con éxito')
+        else:
+            pass
+    else:
+        form = ModificarPolizaForm(initial = model_to_dict(poliza))
+    context = {'poliza': poliza, 'form': form}
+    return render(request, 'gestion_seguros/detalle_poliza.html', context)
