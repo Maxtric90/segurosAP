@@ -19,6 +19,11 @@ class AltaClienteForm(forms.ModelForm):
             raise ValidationError("Ya hay un cliente inscripto con ese documento")
         
         return self.cleaned_data
+    
+class ModificarClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = "__all__"
 
 class AltaPolizaForm(forms.ModelForm):
     class Meta:
