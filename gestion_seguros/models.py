@@ -24,6 +24,9 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=12, verbose_name="Teléfono", null=True)
     tipo_persona = models.CharField(max_length=16, choices=TIPO_PERSONA_CHOICES, verbose_name="Tipo de persona")
 
+    def __str__(self):
+        return self.nombre
+
 class Poliza(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name="Cliente")
     numero = models.IntegerField(verbose_name="Número de póliza")
@@ -33,6 +36,9 @@ class Poliza(models.Model):
     fecha_fin = models.DateField(verbose_name="Fecha de fin cobertura")
     fecha_limite_carga = models.DateField(verbose_name="Fecha límite de actualización de nómina")
     condiciones = models.TextField(max_length=2048, verbose_name="Resumen condiciones de póliza")
+
+    def __str__(self):
+        return self.numero
 
 class Asegurado(models.Model):
     nombre = models.CharField(max_length=64, verbose_name="Nombre")

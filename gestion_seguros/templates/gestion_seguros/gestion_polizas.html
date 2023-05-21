@@ -5,8 +5,37 @@
 {% block contenido %} 
 <h1>Gestión de pólizas</h1>
 
-<h2>Dar de alta póliza</h2>
+<div class="p-2 mb-3">
+    <h3>Dar de alta poliza</h3>
+    <section class="form-container secondary-bg">
+        
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="Dar de alta" class="btn btn-primary">
+        </form>
+    </section>
+</div>
 
-<h2>Cartera de pólizas</h2>
+<div class="p-2">
+    <h3>Cartera de pólizas</h3>
+    <div class="container d-flex flex-wrap p-2">
+        {% for poliza in polizas %}
+        <div class="card w-25 m-3">
+            <div class="card-body">
+            <h5 class="card-title">{{poliza.numero}}</h5>
+            <p class="card-text mb-0"><b>Cliente:</b> {{poliza.cliente.nombre}}</p>
+            <p class="card-text mb-0"><b>Tomador:</b> {{poliza.tomador}}</p>
+            <p class="card-text mb-0"><b>Fecha Inicio:</b> {{poliza.fecha_inicio}}</p>
+            <p class="card-text mb-2"><b>Fecha Fin:</b> {{poliza.fecha_fin}}</p>
+            <a href="#" class="btn btn-primary">Datos</a>
+            <a href="#" class="btn btn-primary">Asegurados</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}

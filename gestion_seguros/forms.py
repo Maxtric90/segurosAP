@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Cliente
+from .models import Cliente, Poliza
 
 TYPE_CHOICES={
     ("general", "General"),
@@ -13,10 +13,6 @@ class AltaClienteForm(forms.ModelForm):
         model = Cliente
         fields = "__all__"
 
-    widgets = {
-        "contrasena": forms.PasswordInput()
-    }
-
     def clean(self):
         documento = self.cleaned_data["documento"]
         if Cliente.objects.filter(documento = documento).exists():
@@ -24,12 +20,26 @@ class AltaClienteForm(forms.ModelForm):
         
         return self.cleaned_data
 
-class Enviarconsultaforma(forms.Form):
-    mail=forms.EmailField(label="Email ", required=True)
-    tipo = forms.ChoiceField(
-        choices=TYPE_CHOICES,
-    )
-    fecha = forms.DateField(
-        widget=forms.SelectDateWidget()
-    )
-    mensaje = forms.CharField(widget=forms.Textarea)
+class AltaPolizaForm(forms.ModelForm):
+    class Meta:
+        model = Poliza
+        fields = "__all__"
+        widgets = {
+            "fecha_inicio": forms.DateInput(
+                attrs={'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)'}
+            ),
+            "fecha_fin": forms.DateInput(
+                attrs={'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)'}
+            ),
+            "fecha_limite_carga": forms.DateInput(
+                attrs={'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)'}
+            )
+        }
+
+    def clean(self):
+        fecha_inicio = self.cleaned_data["fecha_inicio"]
+        fecha_fin = self.cleaned_data["fecha_fin"]
+        if fecha_inicio > fecha_fin:
+            raise ValidationError("La fecha de fin no puede ser anterior a la fecha de inicio")
+        
+        return self.cleaned_data

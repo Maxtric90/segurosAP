@@ -59,3 +59,7 @@ li.nav-item :hover{
 .accent-bg{
     background-color: #c1666b;
 }
+
+.inactive-bg{
+    background-color: #a3a3a3;
+}

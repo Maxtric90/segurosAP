@@ -6,8 +6,9 @@
 <h1>Gestión de clientes</h1>
 
 <div class="p-2 mb-3">
+    <h3>Dar de alta cliente</h3>
     <section class="form-container secondary-bg">
-        <h3>Dar de alta cliente</h3>
+        
         <form action="" method="POST">
             {% csrf_token %}
             <table>
@@ -20,15 +21,15 @@
 
 <div class="p-2">
     <h3>Cartera de clientes</h3>
-    <div class="container d-flex p-2">
+    <div class="container d-flex flex-wrap p-2">
         {% for cliente in clientes %}
-        <div class="card w-25 m-3">
+        <div class="card w-25 m-2">
             <div class="card-body">
             <h5 class="card-title">{{cliente.nombre}}</h5>
-            <p class="card-text">Cuit: {{cliente.documento}}</p>
-            <p class="card-text">Email: {{cliente.email}}</p>
-            <a href="#" class="btn btn-primary">Modificar</a>
-            <a href="#" class="btn btn-danger">Desactivar</a>
+            <p class="card-text mb-0"><b>Cuit</b>: {{cliente.documento}}</p>
+            <p class="card-text mb-2"><b>Email</b>: {{cliente.email}}</p>
+            <a href="#" class="btn btn-primary">Datos</a>
+            <a href="#" class="btn btn-primary">Pólizas</a>
             </div>
         </div>
         {% endfor %}
