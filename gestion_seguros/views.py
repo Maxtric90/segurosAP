@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.forms.models import model_to_dict
-from .forms import AltaClienteForm, AltaPolizaForm, ModificarClienteForm, ModificarPolizaForm
-from .models import Cliente, Poliza
+from django.db.models import Max
+from .forms import AltaClienteForm, AltaPolizaForm, ModificarClienteForm, ModificarPolizaForm, AltaAseguradoForm
+from .models import Cliente, Poliza, Asegurado, Certificado
 
 
 # Create your views here.
@@ -42,10 +43,6 @@ def gestion_polizas(request):
         form = AltaPolizaForm()
     context = {'polizas': polizas, 'form': form}
     return render(request, 'gestion_seguros/gestion_polizas.html', context)
-
-def gestion_asegurados(request):
-    context={}
-    return render(request, 'gestion_seguros/gestion_asegurados.html', context)
 
 def cartera_cliente(request, cliente_id):
     cliente=Cliente.objects.filter(id = cliente_id)[0]   #Entender si es la mejor manera indexar con 0
@@ -100,3 +97,31 @@ def detalle_poliza(request, poliza_id):
         form = ModificarPolizaForm(initial = model_to_dict(poliza))
     context = {'poliza': poliza, 'form': form}
     return render(request, 'gestion_seguros/detalle_poliza.html', context)
+
+def gestion_asegurados(request):
+    context={}
+    return render(request, 'gestion_seguros/gestion_asegurados.html', context)
+
+def cartera_asegurados(request, poliza_id):
+    poliza=Poliza.objects.get(id=poliza_id) 
+    certificados=Certificado.objects.filter(poliza_id = poliza_id)
+    if request.method == "POST":
+        
+        form = AltaAseguradoForm(request.POST)
+        if form.is_valid():
+            print("holas")
+            asegurado=form.save()
+            if not certificados:
+                max_certificado=0
+            else:
+                max_certificado=certificados.aggregate(Max('numero'))['numero__max']
+            certificado=Certificado(poliza_id=poliza_id, asegurado_id=asegurado.id, numero=max_certificado+1)
+            certificado.save()
+            messages.add_message(request, messages.SUCCESS, 'Asegurado dado de alta con éxito')
+            certificados=Certificado.objects.filter(poliza_id = poliza_id)
+        else:
+            messages.add_message(request, messages.ERROR, 'Error en la carga de datos')
+    else:
+        form = AltaAseguradoForm()
+    context = {'certificados': certificados, 'form': form, 'poliza': poliza}
+    return render(request, 'gestion_seguros/cartera_asegurados.html', context)

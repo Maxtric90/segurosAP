@@ -28,8 +28,8 @@
             <h5 class="card-title">{{cliente.nombre}}</h5>
             <p class="card-text mb-0"><b>Cuit</b>: {{cliente.documento}}</p>
             <p class="card-text mb-2"><b>Email</b>: {{cliente.email}}</p>
-            <a href="../detalle_cliente/{{cliente.id}}" class="btn btn-primary">Datos</a>
-            <a href="../cartera_cliente/{{cliente.id}}" class="btn btn-primary">Pólizas</a>
+            <a href="../gestion_clientes/detalle_cliente/{{cliente.id}}" class="btn btn-primary">Datos</a>
+            <a href="../gestion_clientes/cartera_cliente/{{cliente.id}}" class="btn btn-primary">Pólizas</a>
             </div>
         </div>
         {% endfor %}

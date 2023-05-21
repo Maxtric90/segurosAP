@@ -49,5 +49,5 @@ class Asegurado(models.Model):
 
 class Certificado(models.Model):
     poliza = models.ForeignKey(Poliza, on_delete=models.CASCADE)
-    aseugrado = models.ForeignKey(Asegurado, on_delete=models.CASCADE)
+    asegurado = models.ForeignKey(Asegurado, on_delete=models.CASCADE)
     numero = models.IntegerField(verbose_name="Número de certificado")

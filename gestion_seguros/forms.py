@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Cliente, Poliza
+from .models import Cliente, Poliza, Asegurado
 
 TYPE_CHOICES={
     ("general", "General"),
@@ -72,3 +72,8 @@ class ModificarPolizaForm(forms.ModelForm):
             raise ValidationError("La fecha de fin no puede ser anterior a la fecha de inicio")
         
         return self.cleaned_data
+    
+class AltaAseguradoForm(forms.ModelForm):
+    class Meta:
+        model = Asegurado
+        fields = "__all__"
