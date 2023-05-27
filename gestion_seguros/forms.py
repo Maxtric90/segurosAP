@@ -8,11 +8,12 @@ TYPE_CHOICES={
     ("otros", "Otros")
 }
 
-class AltaClienteForm(forms.ModelForm):
+class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = "__all__"
 
+class AltaClienteForm(ClienteForm):
     def clean(self):
         documento = self.cleaned_data["documento"]
         if Cliente.objects.filter(documento = documento).exists():
@@ -20,10 +21,17 @@ class AltaClienteForm(forms.ModelForm):
         
         return self.cleaned_data
     
-class ModificarClienteForm(forms.ModelForm):
-    class Meta:
-        model = Cliente
-        fields = "__all__"
+class ModificarClienteForm(ClienteForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['documento'].widget.attrs.update({"readonly": True, 'disabled': True})
+    
+    def clean(self):
+        documento = self.cleaned_data["documento"]
+        if Cliente.objects.filter(documento = documento).exists():
+            raise ValidationError("Ya hay un cliente inscripto con ese documento")
+        
+        return self.cleaned_data
 
 class AltaPolizaForm(forms.ModelForm):
     class Meta:
