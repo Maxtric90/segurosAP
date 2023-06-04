@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 from django.forms.models import model_to_dict
 from django.db.models import Max
 from .forms import AltaClienteForm, AltaPolizaForm, ModificarClienteForm, ModificarPolizaForm, AltaAseguradoForm
@@ -28,6 +29,7 @@ def gestion_clientes(request):
     context = {'clientes': clientes, 'form': form}
     return render(request, 'gestion_seguros/gestion_clientes.html', context)
 
+@login_required
 def gestion_polizas(request):
     polizas=Poliza.objects.all()
 

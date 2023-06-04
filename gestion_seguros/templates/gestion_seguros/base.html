@@ -25,16 +25,22 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                   </li>
+                  {% if perms.gestion_seguros.change_cliente %}
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'gestion_clientes' %}">Gestión Clientes</a>
                   </li>
+                  {% endif %}
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'gestion_polizas' %}">Gestión Pólizas</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'gestion_asegurados' %}">Gestión Asegurados</a>
-                  </li>
                 </ul>
+              </div>
+              <div>
+                {% if user.is_authenticated %}
+                  <p>{{ user.get_username }} - <a href="{% url 'logout' %}">Logout</a></p>
+                {% else %}
+                  <a href="{% url 'login' %}">Login</a>
+                {% endif %}
               </div>
             </div>
           </nav>

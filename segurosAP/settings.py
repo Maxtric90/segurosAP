@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gestion_seguros',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "segurosAP",
         "USER": "postgres",
-        "PASSWORD": "passwordDB",
+        "PASSWORD": "colgaTe6b",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
@@ -126,3 +127,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL ='login'
+LOGIN_REDIRECT_URL ='index'
+LOGOUT_REDIRECT_URL = 'index'
